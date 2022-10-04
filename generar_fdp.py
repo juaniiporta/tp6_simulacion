@@ -4,39 +4,37 @@ import matplotlib.pyplot as plt
 from fitter import Fitter
 from scipy.stats import pareto
 
-print("\n////////////////////////////////////////////////// Inicio //////////////////////////////////////////////////\n")
-
 distributions = ['pareto']
 
 datasetArriboSemana = pd.read_csv('./#1_arribos_semana.csv', header=0)
-datasetPartidaSemana = pd.read_csv('./#2_partidas_semana.csv', header=0)
-datasetArriboFinde = pd.read_csv('./#3_arribos_finde.csv', header=0)
-datasetPartidaFinde = pd.read_csv('./#4_partidas_finde.csv', header=0)
+# datasetPartidaSemana = pd.read_csv('./#2_partidas_semana.csv', header=0)
+# datasetArriboFinde = pd.read_csv('./#3_arribos_finde.csv', header=0)
+# datasetPartidaFinde = pd.read_csv('./#4_partidas_finde.csv', header=0)
 
-filteredDatasetArriboSemana = datasetArriboSemana[(datasetArriboSemana.diferencia >= 1) & (datasetArriboSemana.diferencia <= 50)]
-filteredDatasetPartidaSemana = datasetPartidaSemana[(datasetPartidaSemana.diferencia >= 1) & (datasetPartidaSemana.diferencia <= 50)]
-filteredDatasetArriboFinde = datasetArriboFinde[(datasetArriboFinde.diferencia >= 1) & (datasetArriboFinde.diferencia <= 50)]
-filteredDatasetPartidaFinde = datasetPartidaFinde[(datasetPartidaFinde.diferencia >= 1) & (datasetPartidaFinde.diferencia <= 50)]
+filteredDatasetArriboSemana = datasetArriboSemana[(datasetArriboSemana.diferencia >= 0.25) & (datasetArriboSemana.diferencia <= 40)]
+# filteredDatasetPartidaSemana = datasetPartidaSemana[(datasetPartidaSemana.diferencia >= 0.25) & (datasetPartidaSemana.diferencia <= 40)]
+# filteredDatasetArriboFinde = datasetArriboFinde[(datasetArriboFinde.diferencia >= 0.25) & (datasetArriboFinde.diferencia <= 40)]
+# filteredDatasetPartidaFinde = datasetPartidaFinde[(datasetPartidaFinde.diferencia >= 0.25) & (datasetPartidaFinde.diferencia <= 40)]
 
 fdp_arribo_semana = Fitter(filteredDatasetArriboSemana.diferencia, distributions=distributions)
-fdp_partida_semana = Fitter(filteredDatasetPartidaSemana.diferencia, distributions=distributions)
-fdp_arribo_finde = Fitter(filteredDatasetArriboFinde.diferencia, distributions=distributions)
-fdp_partida_finde = Fitter(filteredDatasetPartidaFinde.diferencia, distributions=distributions)
+# fdp_partida_semana = Fitter(filteredDatasetPartidaSemana.diferencia, distributions=distributions)
+# fdp_arribo_finde = Fitter(filteredDatasetArriboFinde.diferencia, distributions=distributions)
+# fdp_partida_finde = Fitter(filteredDatasetPartidaFinde.diferencia, distributions=distributions)
 
 fdp_arribo_semana.fit()
-fdp_partida_semana.fit()
-fdp_partida_finde.fit()
-fdp_arribo_finde.fit()
+# fdp_partida_semana.fit()
+# fdp_partida_finde.fit()
+# fdp_arribo_finde.fit()
 
-print("\n////////////////////////////////////////////////// Params //////////////////////////////////////////////////\n")
-
-print( f'Arribo semana {fdp_arribo_semana.fitted_param["pareto"]}')
-print( f'Partida semana {fdp_partida_semana.fitted_param["pareto"]}')
-print("\n")
-print( f'Arribo finde {fdp_arribo_finde.fitted_param["pareto"]}')
-print( f'Partida finde {fdp_partida_finde.fitted_param["pareto"]}')
-print("\n")
-
+b, loc, scale = fdp_arribo_semana.fitted_param["pareto"]
+# b, loc, scale = fdp_partida_semana.fitted_param["pareto"]
+# b, loc, scale = fdp_arribo_finde.fitted_param["pareto"]
+# b, loc, scale = fdp_partida_finde.fitted_param["pareto"]
+print('\n')
+print('b: ' + str(b))
+print('loc: ' + str(loc))
+print('scale: ' + str(scale))
+print('\n')
 
 # fdp_arribo_semana.plot_pdf(names=['pareto'], Nbest=5, lw=1, method='sumsquare_error')
 # fdp_arribo_semana.hist()
@@ -47,25 +45,19 @@ print("\n")
 # fdp_arribo_finde.plot_pdf(names=['pareto'], Nbest=5, lw=4, method='sumsquare_error')
 # fdp_arribo_finde.hist()
 
-# print("\n/////////////////////////////////////////////////summary//////////////////////////////////////////////////\n")
-
-# print(fdp_arribo_semana.summary())
+print(fdp_arribo_semana.summary())
 # print(fdp_partida_semana.summary())
 # print(fdp_arribo_finde.summary())
 # print(fdp_partida_finde.summary())
-
-b = 2.8082473740799703
-loc = -11.509852649735958
-scale= 12.509852652735956
+print('\n')
 
 fig, ax = plt.subplots(1, 1)
-x = np.linspace(0, 50)
+x = np.linspace(0, 40)
 
 # y = (b * (scale)**b) / ((x-loc)**(b+1))
 j = 1 - ((scale/(x-loc)) ** b)
 
-ax.set_xlim([0, 50])
-ax.set_title="Arribos semanales"
+ax.set_xlim([0, 40])
 
 # ax.plot(x, y, linewidth=2.0,marker='o')
 ax.plot(x, j, linewidth=1)
