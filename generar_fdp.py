@@ -30,6 +30,7 @@ b, loc, scale = fdp_arribo_semana.fitted_param["pareto"]
 # b, loc, scale = fdp_partida_semana.fitted_param["pareto"]
 # b, loc, scale = fdp_arribo_finde.fitted_param["pareto"]
 # b, loc, scale = fdp_partida_finde.fitted_param["pareto"]
+
 print('\n')
 print('b: ' + str(b))
 print('loc: ' + str(loc))

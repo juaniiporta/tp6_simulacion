@@ -1,5 +1,7 @@
 import random
 
+tf = 5000*60
+
 def fdpArriboSemana():
     b = 2.8763413175152936
     loc = -10.052864063826082
@@ -29,7 +31,8 @@ def fdpSalidaFinde():
     return (scale/ ( (1-r)**(1/b) ) + loc)
 
 def simularCaso(cib, cm, fdpArribo, fdpSalida):
-    
+    global tf
+
     t = 0 # Tiempo Actual
     nsb = cib # variable estado
     tv = 0 # Tiempo vacio
@@ -82,29 +85,43 @@ def simularCaso(cib, cm, fdpArribo, fdpSalida):
 
     return PARRS, PARRLL, PTV, PTC
 
-PARRS_1, PARRLL_1, PTV_1, PTC_1 = simularCaso(0, 10, fdpArriboSemana, fdpSalidaSemana)
-PARRS_2, PARRLL_2, PTV_2, PTC_2 = simularCaso(5, 15, fdpArriboSemana, fdpSalidaSemana)
-PARRS_3, PARRLL_3, PTV_3, PTC_3 = simularCaso(10, 20, fdpArriboSemana, fdpSalidaSemana)
-PARRS_4, PARRLL_4, PTV_4, PTC_4 = simularCaso(15, 25, fdpArriboSemana, fdpSalidaSemana)
+def get_totals(total_simulation):
+    PARRS = 0
+    PARRLL = 0
+    PTV = 0
+    PTC = 0
 
-print("\n")
-print("PARRS:"+str(PARRS_1))
-print("PARRLL:"+str(PARRLL_1))
-print("PTV:"+str(PTV_1))
-print("PTC:"+str(PTC_1))
-print("\n")
-print("PARRS:"+str(PARRS_2))
-print("PARRLL:"+str(PARRLL_2))
-print("PTV:"+str(PTV_2))
-print("PTC:"+str(PTC_2))
-print("\n")
-print("PARRS:"+str(PARRS_3))
-print("PARRLL:"+str(PARRLL_3))
-print("PTV:"+str(PTV_3))
-print("PTC:"+str(PTC_3))
-print("\n")
-print("PARRS:"+str(PARRS_4))
-print("PARRLL:"+str(PARRLL_4))
-print("PTV:"+str(PTV_4))
-print("PTC:"+str(PTC_4))
-print("\n")
+    for simulation in total_simulation:
+        PARRS += simulation['parrs']
+        PARRLL += simulation['parrll']
+        PTV += simulation['ptv']
+        PTC  += simulation['ptc']
+
+    return PARRS, PARRLL, PTV, PTC 
+
+def run_simulation(ci, cm, fdpArriboSemana, fdpSalidaSemana):
+    total_simulation = []
+    for x in range(100):
+        PARRS, PARRLL, PTV, PTC = simularCaso(ci, cm, fdpArriboSemana, fdpSalidaSemana)
+        total_simulation.append({'parrs': PARRS, 'parrll': PARRLL,'ptv':PTV,'ptc': PTC})
+    PARRS, PARRLL, PTV, PTC = get_totals(total_simulation)
+    
+    print("CM: "+str(cm))
+    print("CI: "+str(ci))
+    print("TF: "+str(tf)+ " horas")
+    print("PARRS: "+str(PARRS/100))
+    print("PARRLL: "+str(PARRLL/100))
+    print("PTV: "+str(PTV/100))
+    print("PTC: "+str(PTC/100))
+
+print("//////SEMANA///////")
+run_simulation(0, 10, fdpArriboSemana, fdpSalidaSemana)
+run_simulation(5, 10, fdpArriboSemana, fdpSalidaSemana)
+run_simulation(10, 20, fdpArriboSemana, fdpSalidaSemana)
+run_simulation(40, 50, fdpArriboSemana, fdpSalidaSemana)
+
+print("//////FINDE///////")
+run_simulation(0, 10, fdpArriboFinde, fdpSalidaFinde)
+run_simulation(5, 10, fdpArriboFinde, fdpSalidaFinde)
+run_simulation(10, 20, fdpArriboFinde, fdpSalidaFinde)
+run_simulation(40, 50, fdpArriboFinde, fdpSalidaFinde)
