@@ -41,7 +41,6 @@ def simularCaso(cib, cm, fdpArribo, fdpSalida):
     nts = 0 # Cantidad total de Salidas
     tpll = 0 # Proxima llegada
     tps = fdpSalida() # Proxima salida
-    tf = 2000 # Tiempo de finalización de simulación
     arrs = 0 # Arrepentidos de salida
     arrll = 0 # Arrepentimiento de llegada
     tc = 0 # Tiempo completo
@@ -106,6 +105,7 @@ def run_simulation(ci, cm, fdpArriboSemana, fdpSalidaSemana):
         total_simulation.append({'parrs': PARRS, 'parrll': PARRLL,'ptv':PTV,'ptc': PTC})
     PARRS, PARRLL, PTV, PTC = get_totals(total_simulation)
 
+    print("\n")
     print("CM: "+str(cm))
     print("CI: "+str(ci))
     print("TF: "+str(tf)+ " horas")
@@ -113,15 +113,20 @@ def run_simulation(ci, cm, fdpArriboSemana, fdpSalidaSemana):
     print("PARRLL: "+str(PARRLL/100))
     print("PTV: "+str(PTV/100))
     print("PTC: "+str(PTC/100))
+    print("\n")
 
+print("\n")
 print("//////SEMANA///////")
 run_simulation(0, 10, fdpArriboSemana, fdpSalidaSemana)
 run_simulation(5, 10, fdpArriboSemana, fdpSalidaSemana)
 run_simulation(10, 20, fdpArriboSemana, fdpSalidaSemana)
+run_simulation(15, 28, fdpArriboSemana, fdpSalidaSemana) # Caso real
 run_simulation(40, 50, fdpArriboSemana, fdpSalidaSemana)
 
+print("\n")
 print("//////FINDE///////")
 run_simulation(0, 10, fdpArriboFinde, fdpSalidaFinde)
 run_simulation(5, 10, fdpArriboFinde, fdpSalidaFinde)
 run_simulation(10, 20, fdpArriboFinde, fdpSalidaFinde)
+run_simulation(15, 28, fdpArriboSemana, fdpSalidaSemana) # Caso real
 run_simulation(40, 50, fdpArriboFinde, fdpSalidaFinde)
