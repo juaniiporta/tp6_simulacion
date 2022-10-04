@@ -3,30 +3,30 @@ import random
 tf = 5000*60
 
 def fdpArriboSemana():
-    b = 2.8763413175152936
-    loc = -10.052864063826082
-    scale= 10.06953072382608
+    b =2.918860481354632
+    loc = -11.010822037693396
+    scale= 11.260822043693395
     r = random.random()
     return (scale/ ( (1-r)**(1/b) ) + loc)
 
 def fdpSalidaSemana():
-    b = 2.731327334435317
-    loc = -10.052864063826082
-    scale= 10.06953072382608
+    b = 2.7171464045164853
+    loc = -9.65682150498274
+    scale = 9.90682151098274
     r = random.random()
     return (scale/ ( (1-r)**(1/b) ) + loc)
 
 def fdpArriboFinde():
-    b = 13.597399902568572
-    loc = -96.53864955632271
-    scale= 96.55531621632271
+    b = 20.349453610346902
+    loc = -165.0588267009199
+    scale= 165.3088267069199
     r = random.random()
     return (scale/ ( (1-r)**(1/b) ) + loc)
 
 def fdpSalidaFinde():
-    b = 7.834420926029725
-    loc = -49.712675426437265
-    scale= 49.72934208643726
+    b = 6.545173347285362
+    loc = -44.08930897044888
+    scale= 44.339308976448876
     r = random.random()
     return (scale/ ( (1-r)**(1/b) ) + loc)
 
@@ -105,7 +105,7 @@ def run_simulation(ci, cm, fdpArriboSemana, fdpSalidaSemana):
         PARRS, PARRLL, PTV, PTC = simularCaso(ci, cm, fdpArriboSemana, fdpSalidaSemana)
         total_simulation.append({'parrs': PARRS, 'parrll': PARRLL,'ptv':PTV,'ptc': PTC})
     PARRS, PARRLL, PTV, PTC = get_totals(total_simulation)
-    
+
     print("CM: "+str(cm))
     print("CI: "+str(ci))
     print("TF: "+str(tf)+ " horas")

@@ -7,29 +7,34 @@ from scipy.stats import pareto
 distributions = ['pareto']
 
 datasetArriboSemana = pd.read_csv('./#1_arribos_semana.csv', header=0)
-# datasetPartidaSemana = pd.read_csv('./#2_partidas_semana.csv', header=0)
-# datasetArriboFinde = pd.read_csv('./#3_arribos_finde.csv', header=0)
-# datasetPartidaFinde = pd.read_csv('./#4_partidas_finde.csv', header=0)
+datasetPartidaSemana = pd.read_csv('./#2_partidas_semana.csv', header=0)
+datasetArriboFinde = pd.read_csv('./#3_arribos_finde.csv', header=0)
+datasetPartidaFinde = pd.read_csv('./#4_partidas_finde.csv', header=0)
 
 filteredDatasetArriboSemana = datasetArriboSemana[(datasetArriboSemana.diferencia >= 0.25) & (datasetArriboSemana.diferencia <= 40)]
-# filteredDatasetPartidaSemana = datasetPartidaSemana[(datasetPartidaSemana.diferencia >= 0.25) & (datasetPartidaSemana.diferencia <= 40)]
-# filteredDatasetArriboFinde = datasetArriboFinde[(datasetArriboFinde.diferencia >= 0.25) & (datasetArriboFinde.diferencia <= 40)]
-# filteredDatasetPartidaFinde = datasetPartidaFinde[(datasetPartidaFinde.diferencia >= 0.25) & (datasetPartidaFinde.diferencia <= 40)]
+filteredDatasetPartidaSemana = datasetPartidaSemana[(datasetPartidaSemana.diferencia >= 0.25) & (datasetPartidaSemana.diferencia <= 40)]
+filteredDatasetArriboFinde = datasetArriboFinde[(datasetArriboFinde.diferencia >= 0.25) & (datasetArriboFinde.diferencia <= 40)]
+filteredDatasetPartidaFinde = datasetPartidaFinde[(datasetPartidaFinde.diferencia >= 0.25) & (datasetPartidaFinde.diferencia <= 40)]
 
 fdp_arribo_semana = Fitter(filteredDatasetArriboSemana.diferencia, distributions=distributions)
-# fdp_partida_semana = Fitter(filteredDatasetPartidaSemana.diferencia, distributions=distributions)
-# fdp_arribo_finde = Fitter(filteredDatasetArriboFinde.diferencia, distributions=distributions)
-# fdp_partida_finde = Fitter(filteredDatasetPartidaFinde.diferencia, distributions=distributions)
+fdp_partida_semana = Fitter(filteredDatasetPartidaSemana.diferencia, distributions=distributions)
+fdp_arribo_finde = Fitter(filteredDatasetArriboFinde.diferencia, distributions=distributions)
+fdp_partida_finde = Fitter(filteredDatasetPartidaFinde.diferencia, distributions=distributions)
 
 fdp_arribo_semana.fit()
-# fdp_partida_semana.fit()
-# fdp_partida_finde.fit()
-# fdp_arribo_finde.fit()
+fdp_partida_semana.fit()
+fdp_partida_finde.fit()
+fdp_arribo_finde.fit()
 
 b, loc, scale = fdp_arribo_semana.fitted_param["pareto"]
 # b, loc, scale = fdp_partida_semana.fitted_param["pareto"]
 # b, loc, scale = fdp_arribo_finde.fitted_param["pareto"]
 # b, loc, scale = fdp_partida_finde.fitted_param["pareto"]
+
+print(fdp_arribo_semana.fitted_param["pareto"])
+print(fdp_partida_semana.fitted_param["pareto"])
+print(fdp_arribo_finde.fitted_param["pareto"])
+print(fdp_partida_finde.fitted_param["pareto"])
 
 print('\n')
 print('b: ' + str(b))
@@ -47,9 +52,9 @@ print('\n')
 # fdp_arribo_finde.hist()
 
 print(fdp_arribo_semana.summary())
-# print(fdp_partida_semana.summary())
-# print(fdp_arribo_finde.summary())
-# print(fdp_partida_finde.summary())
+print(fdp_partida_semana.summary())
+print(fdp_arribo_finde.summary())
+print(fdp_partida_finde.summary())
 print('\n')
 
 fig, ax = plt.subplots(1, 1)
