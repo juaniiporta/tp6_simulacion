@@ -13,10 +13,10 @@ datasetPartidaSemana = pd.read_csv('./#2_partidas_semana.csv', header=0)
 datasetArriboFinde = pd.read_csv('./#3_arribos_finde.csv', header=0)
 datasetPartidaFinde = pd.read_csv('./#4_partidas_finde.csv', header=0)
 
-filteredDatasetArriboSemana = datasetArriboSemana[(datasetArriboSemana.diferencia > 0) & (datasetArriboSemana.diferencia <= 35)]
-filteredDatasetPartidaSemana = datasetPartidaSemana[(datasetPartidaSemana.diferencia > 0) & (datasetPartidaSemana.diferencia <= 35)]
-filteredDatasetArriboFinde = datasetArriboFinde[(datasetArriboFinde.diferencia > 0) & (datasetArriboFinde.diferencia <= 35)]
-filteredDatasetPartidaFinde = datasetPartidaFinde[(datasetPartidaFinde.diferencia > 0) & (datasetPartidaFinde.diferencia <= 35)]
+filteredDatasetArriboSemana = datasetArriboSemana[(datasetArriboSemana.diferencia >= 1) & (datasetArriboSemana.diferencia <= 50)]
+filteredDatasetPartidaSemana = datasetPartidaSemana[(datasetPartidaSemana.diferencia >= 1) & (datasetPartidaSemana.diferencia <= 50)]
+filteredDatasetArriboFinde = datasetArriboFinde[(datasetArriboFinde.diferencia >= 1) & (datasetArriboFinde.diferencia <= 50)]
+filteredDatasetPartidaFinde = datasetPartidaFinde[(datasetPartidaFinde.diferencia >= 1) & (datasetPartidaFinde.diferencia <= 50)]
 
 fdp_arribo_semana = Fitter(filteredDatasetArriboSemana.diferencia, distributions=distributions)
 fdp_partida_semana = Fitter(filteredDatasetPartidaSemana.diferencia, distributions=distributions)
@@ -37,6 +37,7 @@ print( f'Arribo finde {fdp_arribo_finde.fitted_param["pareto"]}')
 print( f'Partida finde {fdp_partida_finde.fitted_param["pareto"]}')
 print("\n")
 
+
 # fdp_arribo_semana.plot_pdf(names=['pareto'], Nbest=5, lw=1, method='sumsquare_error')
 # fdp_arribo_semana.hist()
 # fdp_partida_semana.plot_pdf(names=['pareto'], Nbest=5, lw=2, method='sumsquare_error')
@@ -48,28 +49,26 @@ print("\n")
 
 # print("\n/////////////////////////////////////////////////summary//////////////////////////////////////////////////\n")
 
-print(fdp_arribo_semana.summary())
+# print(fdp_arribo_semana.summary())
 # print(fdp_partida_semana.summary())
 # print(fdp_arribo_finde.summary())
 # print(fdp_partida_finde.summary())
 
-b = 2.8763413175152936
-loc = -10.052864063826082
-scale= 10.06953072382608
+b = 2.8082473740799703
+loc = -11.509852649735958
+scale= 12.509852652735956
 
 fig, ax = plt.subplots(1, 1)
-
 x = np.linspace(0, 50)
 
 # y = (b * (scale)**b) / ((x-loc)**(b+1))
-# j = 1 - ((scale/(x-loc)) ** b)
-k = scale/((1-x)**(1/b)) + loc
+j = 1 - ((scale/(x-loc)) ** b)
 
 ax.set_xlim([0, 50])
+ax.set_title="Arribos semanales"
 
-# ax.plot(x, y, linewidth=2.0)
-# ax.plot(x, j, linewidth=2.0)
-ax.plot(x, k, linewidth=2.0)
+# ax.plot(x, y, linewidth=2.0,marker='o')
+ax.plot(x, j, linewidth=1)
 # ax.plot(x, pareto.pdf(x, b, loc, scale), 'r-', lw=3, alpha=0.8, label='pareto pdf')
 
 plt.show()
