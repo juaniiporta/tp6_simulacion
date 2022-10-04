@@ -29,32 +29,20 @@ def fdpSalidaFinde():
     return (scale/ ( (1-r)**(1/b) ) + loc)
 
 def simularCaso(cib, cm, fdpArribo, fdpSalida):
-    t = 0
-    # Tiempo Actual
-    # variable estado
-    nsb = cib
-    # Tiempo vacio
-    tv = 0
-    # Inicio tiempo vacio
-    itv = 0
-    # Cantidad total de llegadas
-    ntll = 0
-    # Cantidad total de Salidas
-    nts = 0
-    # Proxima llegada
-    tpll = 0
-    # Proxima salida
-    tps = fdpSalida()
-    # Tiempo de finalización de simulación
-    tf = 2000
-    # Arrepentidos de salida
-    arrs = 0
-    # Arrepentimiento de llegada
-    arrll = 0
-    # Tiempo completo
-    tc = 0
-    # Inicio Tiempo completo
-    itc = 0
+    
+    t = 0 # Tiempo Actual
+    nsb = cib # variable estado
+    tv = 0 # Tiempo vacio
+    itv = 0 # Inicio tiempo vacio
+    ntll = 0 # Cantidad total de llegadas
+    nts = 0 # Cantidad total de Salidas
+    tpll = 0 # Proxima llegada
+    tps = fdpSalida() # Proxima salida
+    tf = 2000 # Tiempo de finalización de simulación
+    arrs = 0 # Arrepentidos de salida
+    arrll = 0 # Arrepentimiento de llegada
+    tc = 0 # Tiempo completo
+    itc = 0 # Inicio Tiempo completo
 
     while (t<tf):
 
@@ -71,6 +59,7 @@ def simularCaso(cib, cm, fdpArribo, fdpSalida):
                 ntll=ntll+1
                 if(nsb==cm):
                     itc=t
+                    
         elif(tpll>tps):
             t=tps
             IAS = fdpSalida()
