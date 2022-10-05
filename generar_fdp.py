@@ -26,21 +26,15 @@ fdp_partida_semana.fit()
 fdp_partida_finde.fit()
 fdp_arribo_finde.fit()
 
-b, loc, scale = fdp_arribo_semana.fitted_param["pareto"]
-# b, loc, scale = fdp_partida_semana.fitted_param["pareto"]
-# b, loc, scale = fdp_arribo_finde.fitted_param["pareto"]
-# b, loc, scale = fdp_partida_finde.fitted_param["pareto"]
+b1, loc1, scale1 = fdp_arribo_semana.fitted_param["pareto"]
+b2, loc2, scale2 = fdp_partida_semana.fitted_param["pareto"]
+b3, loc3, scale3 = fdp_arribo_finde.fitted_param["pareto"]
+b4, loc4, scale4 = fdp_partida_finde.fitted_param["pareto"]
 
-print(fdp_arribo_semana.fitted_param["pareto"])
-print(fdp_partida_semana.fitted_param["pareto"])
-print(fdp_arribo_finde.fitted_param["pareto"])
-print(fdp_partida_finde.fitted_param["pareto"])
-
-print('\n')
-print('b: ' + str(b))
-print('loc: ' + str(loc))
-print('scale: ' + str(scale))
-print('\n')
+print(b1, loc1, scale1)
+print(b2, loc2, scale2)
+print(b3, loc3, scale3)
+print(b4, loc4, scale4)
 
 # fdp_arribo_semana.plot_pdf(names=['pareto'], Nbest=5, lw=1, method='sumsquare_error')
 # fdp_arribo_semana.hist()
@@ -51,22 +45,31 @@ print('\n')
 # fdp_arribo_finde.plot_pdf(names=['pareto'], Nbest=5, lw=4, method='sumsquare_error')
 # fdp_arribo_finde.hist()
 
-print(fdp_arribo_semana.summary())
-print(fdp_partida_semana.summary())
-print(fdp_arribo_finde.summary())
-print(fdp_partida_finde.summary())
+# print(fdp_arribo_semana.summary())
+# print(fdp_partida_semana.summary())
+# print(fdp_arribo_finde.summary())
+# print(fdp_partida_finde.summary())
 print('\n')
 
 fig, ax = plt.subplots(1, 1)
 x = np.linspace(0, 40)
 
-# y = (b * (scale)**b) / ((x-loc)**(b+1))
-j = 1 - ((scale/(x-loc)) ** b)
+y1 = (b1 * (scale1)**b1) / ((x-loc1)**(b1+1))
+y2 = (b2 * (scale2)**b2) / ((x-loc2)**(b2+1))
+y3 = (b3 * (scale3)**b3) / ((x-loc3)**(b3+1))
+y4 = (b4 * (scale4)**b4) / ((x-loc4)**(b4+1))
+# j1 = 1 - ((scale1/(x-loc1)) ** b1)
+# j2 = 1 - ((scale2/(x-loc2)) ** b2)
+# j3 = 1 - ((scale3/(x-loc3)) ** b3)
+# j4 = 1 - ((scale4/(x-loc4)) ** b4)
 
 ax.set_xlim([0, 40])
 
 # ax.plot(x, y, linewidth=2.0,marker='o')
-ax.plot(x, j, linewidth=1)
+ax.plot(x, y1, linewidth=1)
+ax.plot(x, y2, linewidth=1)
+ax.plot(x, y3, linewidth=1)
+ax.plot(x, y4, linewidth=1)
 # ax.plot(x, pareto.pdf(x, b, loc, scale), 'r-', lw=3, alpha=0.8, label='pareto pdf')
 
 plt.show()
